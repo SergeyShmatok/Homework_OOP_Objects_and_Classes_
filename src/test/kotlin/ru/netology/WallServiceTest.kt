@@ -9,7 +9,7 @@ import ru.netology.WallService.posts
 class WallServiceTest {
 
     @Before
-    fun clearBeforeTest1() {
+    fun clearBeforeTest() {
         WallService.clear()
     }
 
@@ -23,15 +23,11 @@ class WallServiceTest {
 
 //----------------------------------------------------
 
-    @Before
-    fun clearBeforeTest2() {
-        WallService.clear()
-    }
-
     @Test
     fun update_Testing1() {
         val post1 = Post()
-        val post2 = Post(id = 1, text = "New text") // - пост с изменённым значением text, но с уже имеющимся в массиве id
+        val post2 =
+            Post(id = 1, text = "New text") // - пост с изменённым значением text, но с уже имеющимся в массиве id
         WallService.add(post1)
 
         val result = WallService.update(post2)
@@ -40,10 +36,6 @@ class WallServiceTest {
 
     }
 
-    @Before
-    fun clearBeforeTest3() {
-        WallService.clear()
-    }
 
     @Test
     fun update_Testing2() {
