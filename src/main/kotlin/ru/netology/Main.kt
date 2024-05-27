@@ -5,16 +5,17 @@ import java.time.LocalDateTime
 
 
 data class Post(
-    val id: Int = 0,
-    val likes: Likes = Likes(),
+    val id: Int?, // null?
+    val likes: Likes? = Likes(), // null?
     val text: String = "text",
     val date: LocalDateTime = LocalDateTime.now(),
-    val comments: Comments = Comments(),
+    val comments: Comments? = Comments(), // null?
     val ownerId: Int = 5,
     val fromId: Int = 5,
     val canPin: Boolean = true,
     val canDelete: Boolean = true,
     val canEdit: Boolean = true,
+    val attachments: Array<Attachment> = emptyArray()
 )
 
 class Likes(
@@ -49,7 +50,9 @@ object WallService {
     private var nextUniqueId: Int = 0
 
     fun add(post: Post): Post {
-        val nextPost = post.copy(id = post.id + nextUniqueId + 1)
+        val nextPost = post.copy(
+            id = (post.id ?: 0) + nextUniqueId + 1
+        ) // IDE заставила переписать выражение (указать возможный null)
         posts += nextPost
         nextUniqueId++
         return nextPost
@@ -65,7 +68,7 @@ object WallService {
     }
 
     fun clear() {
-        posts = emptyArray<Post>() // - очистка массива
+        posts = emptyArray<Post>()
         nextUniqueId = 0
     }
 
@@ -74,9 +77,9 @@ object WallService {
 
 fun main() {
 
-    val post1 = Post()
-    val post2 = Post()
-    val post3 = Post()
+    val post1 = Post(null) //
+    val post2 = Post(null) //
+    val post3 = Post(null) // как видим, теперь возможно указать null для этого свойства
 
     WallService.add(post1)
     WallService.add(post2)
